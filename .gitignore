@@ -1,3 +1,6 @@
+# Created by https://www.gitignore.io/api/go,vim
+
+### Go ###
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
 *.a
@@ -22,3 +25,12 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+
+### Vim ###
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
