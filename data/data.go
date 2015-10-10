@@ -6,13 +6,15 @@ import (
 )
 
 type Data struct {
+	Tag string
 	Attributes     []float64
 	Distances      []float64
 	Classification int
 }
 
-func New(attr []float64, numClass int) *Data {
+func New(attr []float64, numClass int, tag string) *Data {
 	return &Data{
+		Tag: tag,
 		Attributes:     attr,
 		Distances:      make([]float64, numClass),
 		Classification: 0,
@@ -37,6 +39,7 @@ func (data *Data) UpdateClassification(centroids []*Data) {
 		if distance < minDistance {
 			minDistance = distance
 			data.Classification = i
+			data.Tag = centroids[i].Tag
 		}
 	}
 }
