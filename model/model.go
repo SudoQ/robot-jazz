@@ -2,8 +2,8 @@ package model
 
 import (
 	"encoding/csv"
-	"os"
 	"github.com/SudoQ/robot-jazz/data"
+	"os"
 	"strconv"
 )
 
@@ -71,7 +71,7 @@ func (model *Model) Save(filename string) error {
 }
 */
 
-func (model *Model) Classify(attributes []float64) (*data.Data,error) {
+func (model *Model) Classify(attributes []float64) (*data.Data, error) {
 	dataItem := data.New(attributes, len(model.Centroids), "")
 	dataItem.UpdateClassification(model.Centroids)
 	return dataItem, nil

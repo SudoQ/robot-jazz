@@ -6,19 +6,19 @@ import (
 )
 
 type Data struct {
-	Tag string
-	Attributes     []float64
-	Distances      []float64
-	Classification int
+	Tag              string
+	Attributes       []float64
+	Distances        []float64
+	Classification   int
 	ClosestCentroids []*Data
 }
 
 func New(attr []float64, numClass int, tag string) *Data {
 	return &Data{
-		Tag: tag,
-		Attributes:     attr,
-		Distances:      make([]float64, numClass),
-		Classification: 0,
+		Tag:              tag,
+		Attributes:       attr,
+		Distances:        make([]float64, numClass),
+		Classification:   0,
 		ClosestCentroids: make([]*Data, 0),
 	}
 }
@@ -37,7 +37,7 @@ func (data *Data) updateDistances(centroids []*Data) {
 func (data *Data) UpdateClassification(centroids []*Data) {
 	data.updateDistances(centroids)
 
-	closestCentroids := make([]int,0)
+	closestCentroids := make([]int, 0)
 	for centroidId, distance := range data.Distances {
 		if len(closestCentroids) == 0 {
 			closestCentroids = append(closestCentroids, centroidId)
@@ -47,7 +47,7 @@ func (data *Data) UpdateClassification(centroids []*Data) {
 				currentDistance := data.Distances[compareId]
 				if distance < currentDistance {
 					// Insert BEGIN
-					closestCentroids = append(closestCentroids,0)
+					closestCentroids = append(closestCentroids, 0)
 					copy(closestCentroids[i+1:], closestCentroids[i:])
 					closestCentroids[i] = centroidId
 					// Insert END
@@ -56,17 +56,17 @@ func (data *Data) UpdateClassification(centroids []*Data) {
 			}
 		}
 	}
-	for _, closeCentroidId := range(closestCentroids) {
+	for _, closeCentroidId := range closestCentroids {
 		data.ClosestCentroids = append(data.ClosestCentroids, centroids[closeCentroidId])
 	}
 	/*
-	for i, distance := range data.Distances {
-		if distance < minDistance {
-			minDistance = distance
-			data.Classification = i
-			data.Tag = centroids[i].Tag
+		for i, distance := range data.Distances {
+			if distance < minDistance {
+				minDistance = distance
+				data.Classification = i
+				data.Tag = centroids[i].Tag
+			}
 		}
-	}
 	*/
 }
 
