@@ -10,6 +10,7 @@ type Data struct {
 	Attributes     []float64
 	Distances      []float64
 	Classification int
+	ClosestCentroids []*Data
 }
 
 func New(attr []float64, numClass int, tag string) *Data {
@@ -18,6 +19,7 @@ func New(attr []float64, numClass int, tag string) *Data {
 		Attributes:     attr,
 		Distances:      make([]float64, numClass),
 		Classification: 0,
+		ClosestCentroids: make([]*Data, 0),
 	}
 }
 
@@ -34,7 +36,30 @@ func (data *Data) updateDistances(centroids []*Data) {
 
 func (data *Data) UpdateClassification(centroids []*Data) {
 	data.updateDistances(centroids)
-	minDistance := math.Inf(1)
+
+	closestCentroids := make([]int,0)
+	for centroidId, distance := range data.Distances {
+		if len(closestCentroids) == 0 {
+			closestCentroids = append(closestCentroids, centroidId)
+		} else {
+			for i, compareId := range closestCentroids {
+				// Kolla distansen för varje som hittas
+				currentDistance := data.Distances[compareId]
+				if distance < currentDistance {
+					// Insert BEGIN
+					closestCentroids = append(closestCentroids,0)
+					copy(closestCentroids[i+1:], closestCentroids[i:])
+					closestCentroids[i] = centroidId
+					// Insert END
+					break
+				}
+			}
+		}
+	}
+	for _, closeCentroidId := range(closestCentroids) {
+		data.ClosestCentroids = append(data.ClosestCentroids, centroids[closeCentroidId])
+	}
+	/*
 	for i, distance := range data.Distances {
 		if distance < minDistance {
 			minDistance = distance
@@ -42,6 +67,7 @@ func (data *Data) UpdateClassification(centroids []*Data) {
 			data.Tag = centroids[i].Tag
 		}
 	}
+	*/
 }
 
 func (data *Data) Waverage(item *Data, weigth float64) {
