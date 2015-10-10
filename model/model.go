@@ -42,10 +42,6 @@ func (model *Model) Load(filename string) error {
 			attributes = append(attributes, attr)
 		}
 		centroids = append(centroids, data.New(attributes, k, tag))
-		//a0, _ := strconv.ParseFloat(v[0], 64)
-		//a1, _ := strconv.ParseFloat(v[1], 64)
-		//a2, _ := strconv.ParseFloat(v[2], 64)
-		//centroids = append(centroids, data.New([]float64{a0, a1, a2}, k))
 	}
 	model.Centroids = centroids
 	return nil
