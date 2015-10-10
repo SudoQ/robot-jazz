@@ -2,7 +2,6 @@ package model
 
 import (
 	"encoding/csv"
-	"fmt"
 	"os"
 	"github.com/SudoQ/robot-jazz/data"
 	"strconv"
@@ -33,11 +32,16 @@ func (model *Model) Load(filename string) error {
 	centroids := make([]*data.Data, 0)
 	for _, v := range rawCSVdata {
 		attributes := make([]float64, 0)
+		var tag string
 		for i := range v {
+			if i == 0 {
+				tag = v[i]
+				continue
+			}
 			attr, _ := strconv.ParseFloat(v[i], 64)
 			attributes = append(attributes, attr)
 		}
-		centroids = append(centroids, data.New(attributes, k))
+		centroids = append(centroids, data.New(attributes, k, tag))
 		//a0, _ := strconv.ParseFloat(v[0], 64)
 		//a1, _ := strconv.ParseFloat(v[1], 64)
 		//a2, _ := strconv.ParseFloat(v[2], 64)
@@ -71,9 +75,9 @@ func (model *Model) Save(filename string) error {
 }
 */
 
-func (model *Model) Classify(attributes []float64) error {
-	dataItem := data.New(attributes, len(model.Centroids))
+func (model *Model) Classify(attributes []float64) (string,error) {
+	dataItem := data.New(attributes, len(model.Centroids), "")
 	dataItem.UpdateClassification(model.Centroids)
-	fmt.Println(dataItem.Classification)
-	return nil
+	tag := dataItem.Tag
+	return tag, nil
 }
