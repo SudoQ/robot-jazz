@@ -2,7 +2,7 @@ package model
 
 import (
 	"encoding/csv"
-	"github.com/SudoQ/robot-jazz/data"
+	"github.com/SudoQ/robotjazz/data"
 	"os"
 	"strconv"
 )
