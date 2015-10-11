@@ -2,8 +2,11 @@ package robotjazz
 
 import (
 	"errors"
+	"log"
+	//"strings"
 	"github.com/SudoQ/robotjazz/chord"
 	"github.com/SudoQ/robotjazz/model"
+	"github.com/SudoQ/robotjazz/data"
 )
 
 /*
@@ -52,4 +55,37 @@ func GetMatchingChords(notes []float64) ([]*chord.Chord, error) {
 		topTenChords = append(topTenChords, chrd)
 	}
 	return topTenChords, nil
+}
+
+func getTopMatches(dataItem *data.Data)([]*chord.Chord, error) {
+	topTenChords := make([]*chord.Chord, 0)
+	for i := 0; i < MinInt(len(dataItem.ClosestCentroids), 10); i++ {
+		centroid := dataItem.ClosestCentroids[i]
+
+		name := centroid.Tag
+		noteWeights := centroid.Attributes
+		chrd := chord.New(name, noteWeights)
+		topTenChords = append(topTenChords, chrd)
+	}
+	return topTenChords, nil
+}
+
+func GetSimilarChords(chordName string) ([]*chord.Chord, error) {
+	centroids := mainModel.Centroids
+	var chrd *data.Data
+	log.Println(chordName)
+	for _, centroid := range centroids {
+		if centroid.Tag == chordName {
+			log.Println("Chord found")
+			chrd = centroid
+		}
+	}
+	if chrd == nil {
+		return nil, errors.New("Chord not found")
+	}
+	topChords, err := getTopMatches(chrd)
+	if err != nil {
+		return nil, err
+	}
+	return topChords, nil
 }
