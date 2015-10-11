@@ -13,11 +13,13 @@ var (
 var cmdMap = map[string]func(){
 	"help":  help,
 	"match": GetMatchingChords,
+	"sim": GetSimilarChords,
 }
 
 var helpMap = map[string]string{
 	"help":  "Find out more about a given command",
 	"match": "Match input notes to chords",
+	"sim": "Input chord and output similar chords",
 }
 
 func menu() {
@@ -74,6 +76,22 @@ func GetMatchingChords() {
 	extendedNotes := util.ExtendedNoteForm(reducedNotes)
 
 	chords, err := robotjazz.GetMatchingChords(extendedNotes)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for _, chord := range chords {
+		fmt.Println(chord)
+	}
+}
+
+func GetSimilarChords() {
+	chordRoot := prompt("Enter the chord root note (e.g. C, F, Bb, ...): ")
+	chordPattern := prompt("Enter a chord pattern (e.g. major, minor, ...): ")
+	chordStr := fmt.Sprintf("%s %s", chordRoot, chordPattern)
+
+	fmt.Println(chordStr)
+	chords, err := robotjazz.GetSimilarChords(chordStr)
 	if err != nil {
 		fmt.Println(err)
 		return
