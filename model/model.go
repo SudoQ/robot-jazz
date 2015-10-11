@@ -47,6 +47,10 @@ func (model *Model) Load(filename string) error {
 	return nil
 }
 
+func (model * Model) Centroids []*data.Data {
+	return model.Centroids
+}
+
 /*
 func (model *Model) Save(filename string) error {
 	csvfile, err := os.Create(filename)
