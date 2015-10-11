@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/SudoQ/robotjazz"
+	"github.com/SudoQ/robotjazz/util"
 )
 
 var (
@@ -56,35 +57,6 @@ func main() {
 	}
 }
 
-var chrom = []string{"C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"}
-
-func getNoteName(note int) string {
-	return chrom[note]
-}
-
-var noteValue = map[string]int{
-	"C":  0,
-	"C#": 1,
-	"Db": 1,
-	"D":  2,
-	"D#": 3,
-	"Eb": 3,
-	"E":  4,
-	"F":  5,
-	"F#": 6,
-	"Gb": 6,
-	"G":  7,
-	"G#": 8,
-	"Ab": 8,
-	"A":  9,
-	"A#": 10,
-	"Bb": 10,
-	"B":  11,
-}
-
-func getNoteValue(note string) int {
-	return noteValue[note]
-}
 
 func GetMatchingChords() {
 	reducedNotes := make([]int, 0)
@@ -96,22 +68,17 @@ func GetMatchingChords() {
 			break
 		}
 
-		reducedNotes = append(reducedNotes, getNoteValue(strNote))
+		reducedNotes = append(reducedNotes, util.GetNoteValue(strNote))
 	}
 
-	extendedNotes := robotjazz.ExtendedNoteForm(reducedNotes)
+	extendedNotes := util.ExtendedNoteForm(reducedNotes)
 
 	chords, err := robotjazz.GetMatchingChords(extendedNotes)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	for name, notes := range chords {
-		line := "%s\t%s\n"
-		chordStr := ""
-		for _, note := range notes {
-			chordStr += fmt.Sprintf("%s ", getNoteName(note))
-		}
-		fmt.Printf(line, name, chordStr)
+	for _, chord := range chords {
+		fmt.Println(chord)
 	}
 }
