@@ -44,11 +44,8 @@ func (model *Model) Load(filename string) error {
 		centroids = append(centroids, data.New(attributes, k, tag))
 	}
 	model.Centroids = centroids
+	model.UpdateCentroids()
 	return nil
-}
-
-func (model * Model) Centroids []*data.Data {
-	return model.Centroids
 }
 
 /*
@@ -79,4 +76,11 @@ func (model *Model) Classify(attributes []float64) (*data.Data, error) {
 	dataItem := data.New(attributes, len(model.Centroids), "")
 	dataItem.UpdateClassification(model.Centroids)
 	return dataItem, nil
+}
+
+func (model *Model) UpdateCentroids() error {
+	for _, centroid := range model.Centroids {
+		centroid.UpdateClassification(model.Centroids)
+	}
+	return nil
 }
