@@ -2,107 +2,133 @@
 	"chordpatterns": [
 		{
 			"name": "major",
-			"notes": [0, 4, 7]
+			"notes": [0, 4, 7],
+			"weights": [1, 1, 1]
 		},
 		{
 			"name": "maj7",
-			"notes": [0, 4, 7, 11]
+			"notes": [0, 4, 7, 11],
+			"weights": [1, 1, 1, 1]
 		},
 		{
 			"name": "maj9",
-			"notes": [0, 4, 7, 11, 2]
+			"notes": [0, 4, 7, 11, 2],
+			"weights": [1, 1, 1, 1, 1]
 		},
 		{
 			"name": "6",
-			"notes": [0, 4, 7, 9]
+			"notes": [0, 4, 7, 9],
+			"weights": [1, 1, 1, 1]
 		},
 		{
 			"name": "add9",
-			"notes": [0, 4, 7, 2]
+			"notes": [0, 4, 7, 2],
+			"weights": [1, 1, 1, 1]
 		},
 		{
 			"name": "maj7b5",
-			"notes": [0, 4, 6, 11]
+			"notes": [0, 4, 6, 11],
+			"weights": [1, 1, 1, 1]
 		},
 		{
 			"name": "maj7#5",
-			"notes": [0, 4, 8, 11]
+			"notes": [0, 4, 8, 11],
+			"weights": [1, 1, 1, 1]
 		},
 		{
 			"name": "minor",
-			"notes": [0, 3, 7]
+			"notes": [0, 3, 7],
+			"weights": [1, 1, 1, 1]
 		},
 		{
 			"name": "m7",
-			"notes": [0, 3, 7, 10]
+			"notes": [0, 3, 7, 10],
+			"weights": [1, 1, 1, 1]
 		},
 		{
 			"name": "m9",
-			"notes": [0, 3, 7, 10, 2]
+			"notes": [0, 3, 7, 10, 2],
+			"weights": [1, 1, 1, 1, 1]
 		},
 		{
 			"name": "m7b9",
-			"notes": [0, 3, 7, 10, 1]
+			"notes": [0, 3, 7, 10, 1],
+			"weights": [1, 1, 1, 1, 1]
 		},
 		{
 			"name": "m6",
-			"notes": [0, 3, 7, 9]
+			"notes": [0, 3, 7, 9],
+			"weights": [1, 1, 1, 1]
 		},
 		{
 			"name": "madd9",
-			"notes": [0, 3, 7, 2]
+			"notes": [0, 3, 7, 2],
+			"weights": [1, 1, 1, 1]
 		},
 		{
 			"name": "m7b5",
-			"notes": [0, 3, 6, 10]
+			"notes": [0, 3, 6, 10],
+			"weights": [1, 1, 1, 1]
 		},
 		{
 			"name": "m7#5",
-			"notes": [0, 3, 8, 10]
+			"notes": [0, 3, 8, 10],
+			"weights": [1, 1, 1, 1]
 		},
 		{
 			"name": "7",
-			"notes": [0, 4, 7, 10]
+			"notes": [0, 4, 7, 10],
+			"weights": [1, 1, 1, 1]
 		},
 		{
 			"name": "9",
-			"notes": [0, 4, 7, 10, 2]
+			"notes": [0, 4, 7, 10, 2],
+			"weights": [1, 1, 1, 1, 1]
 		},
 		{
 			"name": "7b9",
-			"notes": [0, 4, 7, 10, 1]
+			"notes": [0, 4, 7, 10, 1],
+			"weights": [1, 1, 1, 1, 1]
 		},
 		{
 			"name": "7b5",
-			"notes": [0, 4, 6, 10]
+			"notes": [0, 4, 6, 10],
+			"weights": [1, 1, 1, 1]
 		},
 		{
 			"name": "7#5",
-			"notes": [0, 4, 8, 10]
+			"notes": [0, 4, 8, 10],
+			"weights": [1, 1, 1, 1]
 		},
 		{
 			"name": "7+",
-			"notes": [0, 4, 8, 10]
+			"notes": [0, 4, 8, 10],
+			"weights": [1, 1, 1, 1]
 		},
 		{
 			"name": "5",
-			"notes": [0, 7]
+			"notes": [0, 7],
+			"weights": [1, 1]
 		},
 		{
 			"name": "sus4",
-			"notes": [0, 5, 7]
+			"notes": [0, 5, 7],
+			"weights": [1, 1, 1]
 		},
 		{
 			"name": "sus2",
-			"notes": [0, 2, 7]
+			"notes": [0, 2, 7],
+			"weights": [1, 1, 1]
 		},
 		{
 			"name": "dim",
-			"notes": [0, 3, 6, 9]
+			"notes": [0, 3, 6, 9],
+			"weights": [1, 1, 1, 1]
 		},
 		{
 			"name": "aug",
-			"notes": [0, 4, 8]
+			"notes": [0, 4, 8],
+			"weights": [1, 1, 1]
 		}
 	]
 }
