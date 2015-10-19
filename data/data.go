@@ -42,14 +42,14 @@ func (data *Data) UpdateClassification(centroids []*Data) {
 			closestCentroids = append(closestCentroids, centroidId)
 		} else {
 			for i, compareId := range closestCentroids {
-				// Kolla distansen för varje som hittas
 				currentDistance := data.Distances[compareId]
 				if distance < currentDistance {
-					// Insert BEGIN
+
+					// The following three lines is a slice insert
 					closestCentroids = append(closestCentroids, 0)
 					copy(closestCentroids[i+1:], closestCentroids[i:])
 					closestCentroids[i] = centroidId
-					// Insert END
+
 					break
 				}
 			}
@@ -58,15 +58,6 @@ func (data *Data) UpdateClassification(centroids []*Data) {
 	for _, closeCentroidId := range closestCentroids {
 		data.ClosestCentroids = append(data.ClosestCentroids, centroids[closeCentroidId])
 	}
-	/*
-		for i, distance := range data.Distances {
-			if distance < minDistance {
-				minDistance = distance
-				data.Classification = i
-				data.Tag = centroids[i].Tag
-			}
-		}
-	*/
 }
 
 func (data *Data) Waverage(item *Data, weigth float64) {
