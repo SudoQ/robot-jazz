@@ -48,30 +48,6 @@ func (model *Model) Load(filename string) error {
 	return nil
 }
 
-/*
-func (model *Model) Save(filename string) error {
-	csvfile, err := os.Create(filename)
-	if err != nil {
-		return err
-	}
-	defer csvfile.Close()
-	writer := csv.NewWriter(csvfile)
-	lines := make([][]string, 0)
-	for _, c := range model.Centroids {
-		line := make([]string, 12)
-		for j, a := range c.Attributes {
-			line[j] = fmt.Sprintf("%d.0", uint8(a))
-		}
-		lines = append(lines, line)
-	}
-	err = writer.WriteAll(lines)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-*/
-
 func (model *Model) Classify(attributes []float64) (*data.Data, error) {
 	dataItem := data.New(attributes, len(model.Centroids), "")
 	dataItem.UpdateClassification(model.Centroids)
