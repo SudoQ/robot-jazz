@@ -69,20 +69,8 @@ func loadPatternMap(filename string) ([]pattern, error) {
 	return chordPatterns, nil
 }
 
-//type Chord struct {
-//	root int
-//	patternName string
-//	notes []int
-//}
-//
-//type ChordPattern struct {
-//	name string
-//	notes []int
-//}
-
 func main() {
 	patterns, _ := loadPatternMap("../resources/chords.json")
-	//chordMap = make(map[int][]int)
 	chrom := []string{"C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"}
 	chords := make(map[string][]float64)
 	for _, pattern := range patterns {
@@ -91,51 +79,13 @@ func main() {
 			for noteIndex, patternEntry := range pattern.Notes {
 				w := pattern.Weights[noteIndex]
 				newNoteValue := (noteValue + patternEntry) % 12
-				//chord = append(chord, float64((noteValue + patternEntry) % 12) * w)
-
 				chord[newNoteValue] = pattern.Weights[noteIndex] * w
 			}
 			chordName := fmt.Sprintf("%s %s", noteName, pattern.Name)
 			chords[chordName] = chord
 		}
 	}
-	/*
-		for patternName, pattern := range patternMap {
-			for noteValue, noteName := range chrom {
-				chord := make([]int, 0)
-				for _, patternEntry := range pattern {
-					chord = append(chord, ((noteValue + patternEntry) % 12))
-				}
-				chordName := fmt.Sprintf("%s %s", noteName, patternName)
-				chords[chordName] = chord
-			}
-		}
-		// Apply generic weights
-		weights := []float64{
-			1.0, // 0
-			0.5, // 3
-			0.5, // 5
-			0.5, // 7
-			0.5, // 2
-			0.5, // 4
-			0.5, // 6
-			0.5, // ?
-			0.5, // ?
-			0.5, // ?
-			0.5, // ?
-			0.5} // ?
 
-		wChords := make(map[string][]float64)
-		for chordName, chord := range chords {
-			wChord := make([]float64, 12)
-			for i, note := range chord {
-				wChord[note] = weights[i]
-			}
-			wChords[chordName] = wChord
-		}
-	*/
-
-	// Format as csv
 	csvLines := ""
 	for name, chord := range chords {
 		csvLine := name
@@ -146,5 +96,4 @@ func main() {
 		csvLines += csvLine
 	}
 	ioutil.WriteFile("out.csv", []byte(csvLines), 0644)
-	// Output csv lines, with weigthed notes and chord name
 }
