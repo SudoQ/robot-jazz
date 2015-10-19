@@ -3,25 +3,11 @@ package robotjazz
 import (
 	"errors"
 	"log"
-	//"strings"
 	"github.com/SudoQ/robotjazz/chord"
 	"github.com/SudoQ/robotjazz/model"
 	"github.com/SudoQ/robotjazz/data"
 )
 
-/*
-func main() {
-	fmt.Println("Robot Jazz v0.1")
-	m := model.New()
-	m.Load("resources/chords-v1.csv")
-	dataItem, _ := m.Classify([]float64{1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0})
-
-	// Prints top ten most relevant chords
-	for i := 0; i < MinInt(len(dataItem.ClosestCentroids), 10); i++ {
-		fmt.Println(dataItem.ClosestCentroids[i].Tag)
-	}
-}
-*/
 func MinInt(x, y int) int {
 	if x < y {
 		return x
