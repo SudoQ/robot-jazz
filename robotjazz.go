@@ -20,7 +20,7 @@ var mainModel *model.Model
 func init() {
 	mainModel = model.New()
 	// TODO read env for root dir of robot jazz project
-	mainModel.Load("resources/chords-v1.csv")
+	mainModel.Load("resources/chords.csv")
 }
 
 func GetMatchingChords(notes []float64) ([]*chord.Chord, error) {
