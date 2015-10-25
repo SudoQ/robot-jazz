@@ -52,7 +52,7 @@ var jr *robotjazz.Jazzrobot
 
 func main() {
 	jr = robotjazz.New()
-	jr.Load("../resources/chords.csv")
+	jr.Load("../resources/chords.json")
 
 	menu()
 	cmd := ""
