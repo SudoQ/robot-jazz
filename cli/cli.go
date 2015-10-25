@@ -13,13 +13,13 @@ var (
 var cmdMap = map[string]func(){
 	"help":  help,
 	"match": GetMatchingChords,
-	"sim": GetSimilarChords,
+	"sim":   GetSimilarChords,
 }
 
 var helpMap = map[string]string{
 	"help":  "Find out more about a given command",
 	"match": "Match input notes to chords",
-	"sim": "Input chord and output similar chords",
+	"sim":   "Input chord and output similar chords",
 }
 
 func menu() {
@@ -48,7 +48,12 @@ func prompt(text string) string {
 	return input
 }
 
+var jr *robotjazz.Jazzrobot
+
 func main() {
+	jr = robotjazz.New()
+	jr.Load("../resources/chords.csv")
+
 	menu()
 	cmd := ""
 	for cmd != QUIT {
@@ -58,7 +63,6 @@ func main() {
 		}
 	}
 }
-
 
 func GetMatchingChords() {
 	reducedNotes := make([]int, 0)
@@ -75,7 +79,7 @@ func GetMatchingChords() {
 
 	extendedNotes := util.ExtendedNoteForm(reducedNotes)
 
-	chords, err := robotjazz.GetMatchingChords(extendedNotes)
+	chords, err := jr.GetMatchingChords(extendedNotes)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -91,7 +95,7 @@ func GetSimilarChords() {
 	chordStr := fmt.Sprintf("%s %s", chordRoot, chordPattern)
 
 	fmt.Println(chordStr)
-	chords, err := robotjazz.GetSimilarChords(chordStr)
+	chords, err := jr.GetSimilarChords(chordStr)
 	if err != nil {
 		fmt.Println(err)
 		return
