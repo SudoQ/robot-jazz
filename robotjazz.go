@@ -2,11 +2,53 @@ package robotjazz
 
 import (
 	"errors"
-	"log"
 	"github.com/SudoQ/robotjazz/chord"
-	"github.com/SudoQ/robotjazz/model"
 	"github.com/SudoQ/robotjazz/data"
+	"github.com/SudoQ/robotjazz/model"
+	"log"
+	"encoding/csv"
+	"os"
+	"strconv"
 )
+
+type Jazzrobot struct {
+	mainModel *model.Model
+}
+
+func New() *Jazzrobot {
+	return &Jazzrobot{
+		mainModel: model.New(),
+	}
+}
+
+func (jr *Jazzrobot) Load(filename string) error {
+	csvfile, err := os.Open(filename)
+	if err != nil {
+		return err
+	}
+	defer csvfile.Close()
+	reader := csv.NewReader(csvfile)
+	rawCSVdata, err := reader.ReadAll()
+	if err != nil {
+		return err
+	}
+	k := len(rawCSVdata)
+	for _, v := range rawCSVdata {
+		attributes := make([]float64, 0)
+		var tag string
+		for i := range v {
+			if i == 0 {
+				tag = v[i]
+				continue
+			}
+			attr, _ := strconv.ParseFloat(v[i], 64)
+			attributes = append(attributes, attr)
+		}
+		jr.mainModel.AddCentroid(data.New(attributes, k, tag))
+	}
+	jr.mainModel.UpdateCentroids()
+	return nil
+}
 
 func MinInt(x, y int) int {
 	if x < y {
@@ -15,19 +57,11 @@ func MinInt(x, y int) int {
 	return y
 }
 
-var mainModel *model.Model
-
-func init() {
-	mainModel = model.New()
-	// TODO read env for root dir of robot jazz project
-	mainModel.Load("resources/chords.csv")
-}
-
-func GetMatchingChords(notes []float64) ([]*chord.Chord, error) {
+func (jr *Jazzrobot) GetMatchingChords(notes []float64) ([]*chord.Chord, error) {
 	if len(notes) != 12 {
 		return nil, errors.New("First input argument must be a float64 slice of length 12")
 	}
-	dataItem, err := mainModel.Classify(notes)
+	dataItem, err := jr.mainModel.Classify(notes)
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +77,7 @@ func GetMatchingChords(notes []float64) ([]*chord.Chord, error) {
 	return topTenChords, nil
 }
 
-func getTopMatches(dataItem *data.Data)([]*chord.Chord, error) {
+func getTopMatches(dataItem *data.Data) ([]*chord.Chord, error) {
 	topTenChords := make([]*chord.Chord, 0)
 	for i := 0; i < MinInt(len(dataItem.ClosestCentroids), 10); i++ {
 		centroid := dataItem.ClosestCentroids[i]
@@ -56,8 +90,8 @@ func getTopMatches(dataItem *data.Data)([]*chord.Chord, error) {
 	return topTenChords, nil
 }
 
-func GetSimilarChords(chordName string) ([]*chord.Chord, error) {
-	centroids := mainModel.Centroids
+func (jr *Jazzrobot) GetSimilarChords(chordName string) ([]*chord.Chord, error) {
+	centroids := jr.mainModel.Centroids
 	var chrd *data.Data
 	log.Println(chordName)
 	for _, centroid := range centroids {
