@@ -1,10 +1,7 @@
 package model
 
 import (
-	"encoding/csv"
 	"github.com/SudoQ/robotjazz/data"
-	"os"
-	"strconv"
 )
 
 type Model struct {
@@ -17,34 +14,8 @@ func New() *Model {
 	}
 }
 
-func (model *Model) Load(filename string) error {
-	csvfile, err := os.Open(filename)
-	if err != nil {
-		return err
-	}
-	defer csvfile.Close()
-	reader := csv.NewReader(csvfile)
-	rawCSVdata, err := reader.ReadAll()
-	if err != nil {
-		return err
-	}
-	k := len(rawCSVdata)
-	centroids := make([]*data.Data, 0)
-	for _, v := range rawCSVdata {
-		attributes := make([]float64, 0)
-		var tag string
-		for i := range v {
-			if i == 0 {
-				tag = v[i]
-				continue
-			}
-			attr, _ := strconv.ParseFloat(v[i], 64)
-			attributes = append(attributes, attr)
-		}
-		centroids = append(centroids, data.New(attributes, k, tag))
-	}
-	model.Centroids = centroids
-	model.UpdateCentroids()
+func (model *Model) AddCentroid(dataItem *data.Data) error {
+	model.Centroids = append(model.Centroids, dataItem)
 	return nil
 }
 
