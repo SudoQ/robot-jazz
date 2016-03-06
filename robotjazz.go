@@ -159,16 +159,19 @@ func (jr *Jazzrobot) GetMatchingChords(notes []float64) ([]*chord.Chord, error) 
 	if err != nil {
 		return nil, err
 	}
-	topTenChords := make([]*chord.Chord, 0)
-	for i := 0; i < MinInt(len(dataItem.ClosestCentroids), 10); i++ {
-		centroid := dataItem.ClosestCentroids[i]
+	return getTopMatches(dataItem)
+	/*
+		topTenChords := make([]*chord.Chord, 0)
+		for i := 0; i < MinInt(len(dataItem.ClosestCentroids), 10); i++ {
+			centroid := dataItem.ClosestCentroids[i]
 
-		name := centroid.Tag
-		noteWeights := centroid.Attributes
-		chrd := chord.New(name, noteWeights)
-		topTenChords = append(topTenChords, chrd)
-	}
-	return topTenChords, nil
+			name := centroid.Tag
+			noteWeights := centroid.Attributes
+			chrd := chord.New(name, noteWeights)
+			topTenChords = append(topTenChords, chrd)
+		}
+		return topTenChords, nil
+	*/
 }
 
 func getTopMatches(dataItem *data.Data) ([]*chord.Chord, error) {
