@@ -1,15 +1,15 @@
 package robotjazz
 
 import (
+	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/SudoQ/robotjazz/chord"
 	"github.com/SudoQ/robotjazz/data"
 	"github.com/SudoQ/robotjazz/model"
 	"github.com/SudoQ/robotjazz/noteset"
-	"log"
 	"io/ioutil"
-	"encoding/json"
-	"fmt"
+	"log"
 	//"os"
 	//"strconv"
 )
@@ -102,7 +102,7 @@ func (jr *Jazzrobot) Load(filename string) error {
 				newNoteValue := (noteValue + patternEntry) % 12
 				weights[newNoteValue] = pattern.Weights[noteIndex] * w
 			}
-			id := fmt.Sprintf("%i", len(jr.chordMap))
+			id := fmt.Sprintf("%d", len(jr.chordMap))
 			root := noteValue
 			noteWeights := weights
 			patternId := pattern.Name
@@ -140,6 +140,7 @@ func (jr *Jazzrobot) Load(filename string) error {
 			jr.mainModel.AddCentroid(data.New(attributes, k, tag))
 		}*/
 	jr.mainModel.UpdateCentroids()
+	log.Printf("Loaded [%d, %d] number of chords\n", len(jr.chordMap), len(jr.mainModel.Centroids))
 	return nil
 }
 

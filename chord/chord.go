@@ -1,31 +1,31 @@
 package chord
 
 import (
-	"github.com/SudoQ/robotjazz/util"
 	"fmt"
+	"github.com/SudoQ/robotjazz/util"
 )
 
 type Chord struct {
-	name string
+	name        string
 	noteWeights []float64
 }
 
 func New(name string, noteWeights []float64) *Chord {
-	return &Chord {
-		name: name,
+	return &Chord{
+		name:        name,
 		noteWeights: noteWeights,
 	}
 }
 
-func (chrd * Chord) Name() string {
+func (chrd *Chord) Name() string {
 	return chrd.name
 }
 
-func (chrd * Chord) NoteWeights() []float64 {
+func (chrd *Chord) NoteWeights() []float64 {
 	return chrd.noteWeights
 }
 
-func (chrd * Chord) String() string {
+func (chrd *Chord) String() string {
 	line := "%s\t%s"
 	chordStr := ""
 	for _, note := range util.ReducedNoteForm(chrd.noteWeights) {
